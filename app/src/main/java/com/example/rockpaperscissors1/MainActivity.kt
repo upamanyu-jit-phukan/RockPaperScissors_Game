@@ -54,7 +54,7 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
     var matchPoints by remember { mutableStateOf(3) }
     var playerPoints by remember { mutableStateOf(0) }
     var computerPoints by remember { mutableStateOf(0) }
-    val output = remember { mutableStateOf("") }
+    var output = remember { mutableStateOf("") }
     var Expanded by remember { mutableStateOf(false) }
 
     fun play() {
