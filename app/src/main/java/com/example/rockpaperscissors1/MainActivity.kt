@@ -64,14 +64,10 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
         }
         output.value = ""
         val randomNumber = (1..3).random()
-        if(randomNumber==1) {
-            computerChoice = "rock"
-        }
-        else if(randomNumber==2) {
-            computerChoice = "paper"
-        }
-        else if(randomNumber==3) {
-            computerChoice = "scissors"
+        computerChoice = when(randomNumber) {
+            1 -> "rock"
+            2 -> "paper"
+            3 -> "scissors"
         }
         if(computerPoints<matchPoints && playerPoints<matchPoints) {
             if (randomNumber == 1) {
@@ -130,19 +126,19 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
                 onClick = {
                     Expanded = true
                     matchPoints = 3
-                    play()
+
                 })
             DropdownMenuItem(text = {Text("5 Points")},
                 onClick = {
                     Expanded = true
                     matchPoints = 5
-                    play()
+
                 })
             DropdownMenuItem(text = {Text("10 Points")},
                 onClick = {
                     Expanded = true
                     matchPoints = 10
-                    play()
+                    
                 })
         }
         Text("${output.value}",
