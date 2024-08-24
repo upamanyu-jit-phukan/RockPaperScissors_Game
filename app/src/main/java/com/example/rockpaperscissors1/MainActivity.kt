@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -109,7 +110,7 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineLarge
         )
 
-        Spacer(modifier = Modifier.width(40.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         OutlinedTextField(value = playerChoice.value, onValueChange = { it ->
             playerChoice.value = it
@@ -117,7 +118,7 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
         },
             label = {Text("Rock, Paper or Scissors?")})
 
-        Spacer(modifier = Modifier.width(32.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Button(onClick = { Expanded.value = true }) {
             Text("Select Number of Points")
@@ -144,7 +145,7 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
 
                 })
         }
-        Spacer(modifier = Modifier.width(40.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         Text(text = output.value,
             style = MaterialTheme.typography.headlineMedium)
 
