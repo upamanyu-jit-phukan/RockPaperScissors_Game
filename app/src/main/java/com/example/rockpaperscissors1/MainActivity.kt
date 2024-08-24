@@ -49,48 +49,51 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RockPaperScissors(modifier: Modifier = Modifier) {
 
-    var playerChoice by remember { mutableStateOf("") }
-    var computerChoice by remember { mutableStateOf("") }
-    var matchPoints by remember { mutableStateOf(3) }
-    var playerPoints by remember { mutableStateOf(0) }
-    var computerPoints by remember { mutableStateOf(0) }
+    var playerChoice = remember { mutableStateOf("") }
+    var computerChoice = remember { mutableStateOf("") }
+    var matchPoints = remember { mutableStateOf(3) }
+    var playerPoints = remember { mutableStateOf(0) }
+    var computerPoints = remember { mutableStateOf(0) }
     var output = remember { mutableStateOf("") }
-    var Expanded by remember { mutableStateOf(false) }
+    var Expanded = remember { mutableStateOf(false) }
 
     fun play() {
-        playerChoice = playerChoice.lowercase()
-        while(playerChoice!="rock" && playerChoice!="paper" && playerChoice!="scissors") {
+        playerChoice.value = playerChoice.value.lowercase()
+        if(playerChoice.value!="rock" && playerChoice.value!="paper" && playerChoice.value!="scissors") {
             output.value = "Please enter valid input!"
         }
-        output.value = ""
-        val randomNumber = (1..3).random()
-        computerChoice = when(randomNumber) {
-            1 -> "rock"
-            2 -> "paper"
-            3 -> "scissors"
-        }
-        if(computerPoints<matchPoints && playerPoints<matchPoints) {
-            if (randomNumber == 1) {
-//            if(playerChoice == "rock")
-                if (playerChoice == "paper") playerPoints++
-                else if (playerChoice == "scissors") computerPoints++
-            } else if (randomNumber == 2) {
-//            if(playerChoice == "paper") println("draw")
-                else if (playerChoice == "scissors") playerPoints++
-                else if (playerChoice == "rock") computerPoints++
-            } else if (randomNumber == 3) {
-//            if(playerChoice == "scissors") println("draw")
-                if (playerChoice == "rock") playerPoints++
-                else if (playerChoice == "paper") computerPoints++
-            }
-        }
         else {
-            if (computerPoints == matchPoints)
-                output.value = "Computer has won $computerPoints-$playerPoints. :("
-            else {
-                output.value = "Congratulations, you have won by $playerPoints-$computerPoints! :)"
-                playerPoints = 0
-                computerPoints = 0
+            output.value = ""
+            val randomNumber = (1..3).random()
+            computerChoice.value = when (randomNumber) {
+                1 -> "rock"
+                2 -> "paper"
+                else -> "scissors"
+            }
+            if (computerPoints.value < matchPoints.value && playerPoints.value < matchPoints.value) {
+                if (randomNumber == 1) {
+//            if(playerChoice == "rock")
+                    if (playerChoice.value == "paper") playerPoints.value++
+                    else if (playerChoice.value == "scissors") computerPoints.value++
+                } else if (randomNumber == 2) {
+//            if(playerChoice == "paper") println("draw")
+                    if (playerChoice.value == "scissors") playerPoints.value++
+                    else if (playerChoice.value == "rock") computerPoints.value++
+                } else if (randomNumber == 3) {
+//            if(playerChoice == "scissors") println("draw")
+                    if (playerChoice.value == "rock") playerPoints.value++
+                    else if (playerChoice.value == "paper") computerPoints.value++
+                }
+            } else {
+                if (computerPoints.value == matchPoints.value)
+                    output.value =
+                        "Computer has won ${computerPoints.value}-${playerPoints.value}. :("
+                else {
+                    output.value =
+                        "Congratulations, you have won by ${playerPoints.value}-${computerPoints.value}! :)"
+                    playerPoints.value = 0
+                    computerPoints.value = 0
+                }
             }
         }
 
@@ -102,48 +105,48 @@ fun RockPaperScissors(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val context = LocalContext.current
-        Text("Score: User $playerPoints - $computerPoints Computer",
+        Text("Score: User ${playerPoints.value} - ${computerPoints.value} Computer",
             style = MaterialTheme.typography.headlineLarge
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(40.dp))
 
-        OutlinedTextField(value = playerChoice, onValueChange = { it ->
-            playerChoice = it
+        OutlinedTextField(value = playerChoice.value, onValueChange = { it ->
+            playerChoice.value = it
             play()
         },
             label = {Text("Rock, Paper or Scissors?")})
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(32.dp))
 
-        Button(onClick = { Expanded = true }) {
+        Button(onClick = { Expanded.value = true }) {
             Text("Select Number of Points")
             androidx.compose.material3.Icon( imageVector = Icons.Default.ArrowDropDown,
                 "Arrow Down")
         }
-        DropdownMenu(expanded = Expanded, onDismissRequest = { Expanded = false }) {
+        DropdownMenu(expanded = Expanded.value, onDismissRequest = { Expanded.value = false }) {
             DropdownMenuItem(text = {Text("3 Points")},
                 onClick = {
-                    Expanded = true
-                    matchPoints = 3
+                    Expanded.value = false
+                    matchPoints.value = 3
 
                 })
             DropdownMenuItem(text = {Text("5 Points")},
                 onClick = {
-                    Expanded = true
-                    matchPoints = 5
+                    Expanded.value = false
+                    matchPoints.value = 5
 
                 })
             DropdownMenuItem(text = {Text("10 Points")},
                 onClick = {
-                    Expanded = true
-                    matchPoints = 10
-                    
+                    Expanded.value = false
+                    matchPoints.value = 10
+
                 })
         }
-        Text("${output.value}",
-            Style = MaterialTheme.typography.headlineMedium
-        )
+        Spacer(modifier = Modifier.width(40.dp))
+        Text(text = output.value,
+            style = MaterialTheme.typography.headlineMedium)
 
 
     }
